@@ -59,6 +59,11 @@ class Config implements ConfigInterface
     private ?string $openedConfig = null;
 
     /**
+     * @var array
+     */
+    private array $defaultDataOpenedConfig = [];
+
+    /**
      * @var bool
      */
     private bool $withCache;
@@ -113,12 +118,13 @@ class Config implements ConfigInterface
      *
      * @throws ConfigNotFoundException
      */
-    public function open(string $config, bool $throw = true): ConfigInterface
+    public function open(string $config, array $default = [], bool $throw = true): ConfigInterface
     {
 
         $this->openedConfig = $config;
+        $this->defaultDataOpenedConfig = $default;
 
-        if ($throw && !$this->exist($this->openedConfig)) {
+        if ($throw && [] === $default && !$this->exist($this->openedConfig)) {
             throw new ConfigNotFoundException($config);
         }
 
@@ -142,7 +148,7 @@ class Config implements ConfigInterface
             return null;
         }
 
-        $configData = $this->configData['auto'][$this->openedConfig];
+        $configData = $this->configData['auto'][$this->openedConfig] ?? $this->defaultDataOpenedConfig;
 
         if (null === $keys) {
             return $configData;

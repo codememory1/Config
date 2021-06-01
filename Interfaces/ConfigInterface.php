@@ -13,17 +13,18 @@ interface ConfigInterface
 
     /**
      * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
-     * Open the configuration to get data from it, using the 2nd
+     * Open the configuration to get data from it, using the 3nd
      * argument, control the exception in the absence of a config
      * is indicated
      * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
      *
      * @param string $config
+     * @param array  $default
      * @param bool   $throw
      *
      * @return ConfigInterface
      */
-    public function open(string $config, bool $throw = true): ConfigInterface;
+    public function open(string $config, array $default = [], bool $throw = true): ConfigInterface;
 
     /**
      * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
