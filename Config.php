@@ -144,10 +144,6 @@ class Config implements ConfigInterface
             throw new NotOpenConfigException();
         }
 
-        if (!$this->exist($this->openedConfig)) {
-            return null;
-        }
-
         $configData = $this->configData['auto'][$this->openedConfig] ?? $this->defaultDataOpenedConfig;
 
         if (null === $keys) {
