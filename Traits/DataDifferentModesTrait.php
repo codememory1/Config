@@ -62,7 +62,7 @@ trait DataDifferentModesTrait
 
         $data = [];
         $configs = $finder
-            ->dirname($this->configPath)
+            ->setPathForFind($this->configPath)
             ->file()
             ->byRegex('\/[a-zA-Z-_]+.yaml$')
             ->get();
