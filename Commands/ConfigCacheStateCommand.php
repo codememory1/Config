@@ -50,7 +50,6 @@ class ConfigCacheStateCommand extends StateAbstract
         $filesystem = new File();
         $config = new Config($filesystem);
         $cache = new Cache(new YamlType(), $filesystem);
-        $cache->setConfigPath(Utils::DEFAULT_CONFIG_PATH);
 
         $devBinds = serialize($config->getDevelopmentDataWithParsing());
         $prodBinds = serialize($cache->get(Config::TYPE_CACHE, Config::NAME_CACHE));

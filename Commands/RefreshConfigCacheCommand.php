@@ -72,9 +72,6 @@ class RefreshConfigCacheCommand extends Command
         $config = new Config($filesystem);
         $json = new JsonParser();
 
-        $cache
-            ->setConfigPath(Utils::DEFAULT_CONFIG_PATH);
-
         $configDataToModeDevelopment = $config->getDevelopmentDataWithParsing();
 
         if ($input->getOption('all') || !$input->getOption('update-binds')) {
