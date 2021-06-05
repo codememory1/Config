@@ -253,4 +253,5 @@ class Config implements ConfigInterface
 
     }
 
+}
   
