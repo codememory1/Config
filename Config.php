@@ -13,9 +13,9 @@ use Codememory\Components\Environment\Exceptions\EnvironmentVariableNotFoundExce
 use Codememory\Components\Environment\Exceptions\IncorrectPathToEnviException;
 use Codememory\Components\Environment\Exceptions\ParsingErrorException;
 use Codememory\Components\Environment\Exceptions\VariableParsingErrorException;
+use Codememory\Components\GlobalConfig\GlobalConfig;
 use Codememory\FileSystem\Interfaces\FileInterface;
 use Codememory\Support\Arr;
-use Codememory\Components\GlobalConfig\GlobalConfig;
 
 /**
  * Class Config
@@ -198,9 +198,11 @@ class Config implements ConfigInterface
     public function setBind(string $bind, mixed $value): ConfigInterface
     {
 
-        $binds = $this->isProd ? $this->binds['prod'] : $this->binds['dev'];
-
-        $binds[$bind] = $value;
+        if ($this->isProd) {
+            $this->binds['prod'][$bind] = $value;
+        } else {
+            $this->binds['dev'][$bind] = $value;
+        }
 
         return $this;
 
@@ -247,8 +249,4 @@ class Config implements ConfigInterface
     public function getBindsInProductionMode(): array
     {
 
-        return $this->binds['prod'];
-
-    }
-
-}
+  
