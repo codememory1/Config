@@ -249,4 +249,8 @@ class Config implements ConfigInterface
     public function getBindsInProductionMode(): array
     {
 
+        return $this->binds['prod'];
+
+    }
+
   
