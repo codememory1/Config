@@ -3,6 +3,7 @@
 namespace Codememory\Components\Configuration\Traits;
 
 use Codememory\Components\Caching\Cache;
+use Codememory\Components\Caching\Exceptions\ConfigPathNotExistException;
 use Codememory\Components\Markup\Types\YamlType;
 
 /**
@@ -37,6 +38,7 @@ trait BindsDifferentDevelopmentModesTrait
      * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
      *
      * @return mixed
+     * @throws ConfigPathNotExistException
      */
     private function bindsInProductionMode(): mixed
     {
