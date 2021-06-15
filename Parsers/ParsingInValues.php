@@ -76,7 +76,7 @@ class ParsingInValues
 
         if (preg_match_all('/%(?<binds>[a-z.-_]+)%/i', $data, $match)) {
             foreach ($match['binds'] as $bind) {
-                Str::replace($data, "%$bind%", $this->binds[$bind] ?? null);
+                Str::replace($data, "%$bind%", $this->binds[$bind] ?? '');
             }
 
         }
