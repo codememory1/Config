@@ -2,6 +2,8 @@
 
 namespace Codememory\Components\Configuration;
 
+use Codememory\Components\Caching\Cache;
+use Codememory\Components\Caching\Exceptions\ConfigPathNotExistException;
 use Codememory\Components\Configuration\Exceptions\ConfigNotFoundException;
 use Codememory\Components\Configuration\Exceptions\NotOpenConfigException;
 use Codememory\Components\Configuration\Interfaces\ConfigInterface;
@@ -14,6 +16,7 @@ use Codememory\Components\Environment\Exceptions\IncorrectPathToEnviException;
 use Codememory\Components\Environment\Exceptions\ParsingErrorException;
 use Codememory\Components\Environment\Exceptions\VariableParsingErrorException;
 use Codememory\Components\GlobalConfig\GlobalConfig;
+use Codememory\Components\Markup\Types\YamlType;
 use Codememory\FileSystem\Interfaces\FileInterface;
 use Codememory\Support\Arr;
 
@@ -37,6 +40,11 @@ class Config implements ConfigInterface
      * @var FileInterface
      */
     private FileInterface $filesystem;
+
+    /**
+     * @var null|Cache
+     */
+    private ?Cache $cache = null;
 
     /**
      * @var string
@@ -82,6 +90,7 @@ class Config implements ConfigInterface
      * @throws IncorrectPathToEnviException
      * @throws ParsingErrorException
      * @throws VariableParsingErrorException
+     * @throws ConfigPathNotExistException
      */
     public function __construct(FileInterface $filesystem)
     {
@@ -90,26 +99,46 @@ class Config implements ConfigInterface
         $this->configPath = GlobalConfig::get('configuration.pathWithConfigs');
         $this->withCache = GlobalConfig::get('configuration.useCache');
 
-        $prodBinds = [];
-        $prodData = [];
-
-        if ($this->withCache) {
-            Environment::__constructStatic($this->filesystem);
-
-            $prodBinds = $this->bindsInProductionMode();
-            $prodData = $this->productionMode();
-            $this->isProd = isProd();
-        }
+        [$prodBinds, $prodData] = $this->handlerWhenWithCache();
 
         $this->binds = [
             'dev'  => $this->bindsInDevelopmentMode(),
             'prod' => $prodBinds
         ];
         $this->configData = [
-            'dev'  => $this->getDevelopmentDataWithParsing(),
+            'dev'  => !$this->isProd ? $this->getDevelopmentDataWithParsing() : [],
             'prod' => $prodData
         ];
         $this->configData['auto'] = $this->isProd ? $this->configData['prod'] : $this->configData['dev'];
+
+    }
+
+    /**
+     * @return array
+     * @throws ConfigPathNotExistException
+     * @throws EnvironmentVariableNotFoundException
+     * @throws IncorrectPathToEnviException
+     * @throws ParsingErrorException
+     * @throws VariableParsingErrorException
+     */
+    private function handlerWhenWithCache(): array
+    {
+
+        $prodBinds = [];
+        $prodData = [];
+
+        if ($this->withCache) {
+            Environment::__constructStatic($this->filesystem);
+
+            $this->cache = new Cache(new YamlType(), $this->filesystem);
+
+            $prodBinds = $this->bindsInProductionMode();
+            $prodData = $this->productionMode();
+
+            $this->isProd = isProd();
+        }
+
+        return [$prodBinds, $prodData];
 
     }
 

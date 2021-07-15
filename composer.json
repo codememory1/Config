@@ -9,12 +9,12 @@
         }
     ],
     "require": {
-        "codememory/fs": "^1.1.2",
-        "codememory/finder": "^1.1",
-        "codememory/environment": "^1.0.2",
         "codememory/caching": "^1.1.1",
         "codememory/console": "^1.0.3",
-        "codememory/global-config": "^1.1.1",
+        "codememory/environment": "^1.0.2",
+        "codememory/finder": "^1.1",
+        "codememory/fs": "^1.1.2",
+        "codememory/global-config": "^1.1",
         "codememory/markup": "2.0"
     },
     "autoload": {
@@ -24,5 +24,8 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^5.2"
+    },
+    "config": {
+        "sort-packages": true
     }
 }

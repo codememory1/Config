@@ -2,7 +2,6 @@
 
 namespace Codememory\Components\Configuration\Traits;
 
-use Codememory\Components\Caching\Cache;
 use Codememory\Components\Finder\Find;
 use Codememory\Components\Markup\Markup;
 use Codememory\Components\Markup\Types\YamlType;
@@ -11,6 +10,7 @@ use Codememory\Support\Str;
 
 /**
  * Trait DataDifferentModesTrait
+ *
  * @package Codememory\Components\Configuration\Traits
  *
  * @author  Codememory
@@ -33,7 +33,7 @@ trait DataDifferentModesTrait
 
         $binds = [];
 
-        foreach ($dataConfigs as $key => $dataConfig) {
+        foreach ($dataConfigs as $dataConfig) {
             if (is_array($dataConfig) && Arr::exists($dataConfig, self::KEY_WITH_BINDS)) {
                 $binds = array_merge($binds, $dataConfig[self::KEY_WITH_BINDS]);
             }
@@ -115,9 +115,7 @@ trait DataDifferentModesTrait
     private function productionMode(): array
     {
 
-        $caching = new Cache(new YamlType(), $this->filesystem);
-
-        return $caching->get(self::TYPE_CACHE, self::NAME_CACHE);
+        return $this->cache->get(self::TYPE_CACHE, self::NAME_CACHE);
 
     }
 

@@ -38,14 +38,11 @@ trait BindsDifferentDevelopmentModesTrait
      * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
      *
      * @return mixed
-     * @throws ConfigPathNotExistException
      */
     private function bindsInProductionMode(): mixed
     {
 
-        $cache = new Cache(new YamlType(), $this->filesystem);
-
-        return $cache->get(self::TYPE_CACHE, self::KEY_WITH_BINDS);
+        return $this->cache->get(self::TYPE_CACHE, self::KEY_WITH_BINDS);
 
     }
 

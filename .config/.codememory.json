@@ -1,0 +1,6 @@
+{
+  "configuration": {
+    "pathWithConfigs": "configs",
+    "useCache": true
+  }
+}
