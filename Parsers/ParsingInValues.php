@@ -106,7 +106,7 @@ class ParsingInValues
 
                     array_map(fn (mixed $value) => trim($value), $arguments);
 
-                    Str::replace($data, "%$function($argument)%", $function(...$arguments));
+                    Str::replace($data, "%$function($argument)%", $function(...$arguments) ?: '');
                 }
             }
         }
