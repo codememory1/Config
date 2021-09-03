@@ -1,6 +1,7 @@
 {
     "name": "codememory/config",
-    "description": "",
+    "description": "Library from codememory to work with configuration",
+    "type": "libary",
     "license": "MIT",
     "authors": [
         {
@@ -9,13 +10,13 @@
         }
     ],
     "require": {
-        "codememory/caching": "^1.1.1",
-        "codememory/console": "^1.0.3",
-        "codememory/environment": "^1.0.2",
-        "codememory/finder": "^1.1",
-        "codememory/fs": "^1.1.2",
+        "codememory/caching": "^1.1",
+        "codememory/console": "^1.0",
+        "codememory/fs": "^1.1",
         "codememory/global-config": "^1.1",
-        "codememory/markup": "2.0"
+        "codememory/markup": "^2.0",
+        "codememory/singleton": "^1.0",
+        "codememory/support": "^1.2"
     },
     "autoload": {
         "psr-4": {
