@@ -4,6 +4,7 @@ namespace Codememory\Components\Configuration\Commands;
 
 use Codememory\Components\Caching\Cache;
 use Codememory\Components\Configuration\Configuration;
+use Codememory\Components\Configuration\Modes\DevelopmentMode;
 use Codememory\Components\Configuration\Modes\ProductionMode;
 use Codememory\Components\Console\Command;
 use Codememory\Components\Markup\Types\YamlType;
@@ -54,20 +55,21 @@ class RefreshConfigCacheCommand extends Command
 
         $filesystem = new File();
         $cache = new Cache(new YamlType(), $filesystem);
+        $handlerMode = Configuration::getInstance()->getModeHandler(DevelopmentMode::MODE);
 
         if ($input->getOption('all') || !$input->getOption('update-binds')) {
-            $cache->create(ProductionMode::TYPE_CACHE, ProductionMode::NAME_CACHE, Configuration::getInstance()->getAllConfigs());
+            $cache->create(ProductionMode::TYPE_CACHE, ProductionMode::NAME_CACHE, $handlerMode->getConfigsWithData());
 
             $this->io->success('Config cache updated');
         }
 
         if ($input->getOption('update-binds') || $input->getOption('all')) {
-            $cache->create(ProductionMode::TYPE_CACHE, ProductionMode::BINDS_CACHE_NAME, Configuration::getInstance()->getBinds());
+            $cache->create(ProductionMode::TYPE_CACHE, ProductionMode::BINDS_CACHE_NAME, $handlerMode->getAllBinds());
 
             $this->io->success('Config bind cache updated');
         }
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
 
     }
 

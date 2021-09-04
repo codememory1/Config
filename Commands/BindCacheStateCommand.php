@@ -3,8 +3,8 @@
 namespace Codememory\Components\Configuration\Commands;
 
 use Codememory\Components\Configuration\Configuration;
+use Codememory\Components\Configuration\Modes\DevelopmentMode;
 use Codememory\Components\Configuration\Modes\ProductionMode;
-use Codememory\Components\Console\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -34,12 +34,12 @@ class BindCacheStateCommand extends AbstractState
     protected function handler(InputInterface $input, OutputInterface $output): int
     {
 
-        $devConfigs = serialize(Configuration::getInstance()->getBinds());
+        $devConfigs = serialize(Configuration::getInstance()->getModeHandler(DevelopmentMode::MODE)->getAllBinds());
         $prodConfigs = serialize(Configuration::getInstance()->getModeHandler(ProductionMode::MODE)->getAllBinds());
 
         $this->getProgress($output, $devConfigs, $prodConfigs);
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
 
     }
 

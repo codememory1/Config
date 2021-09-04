@@ -40,7 +40,7 @@ class ConfigurationCacheStateCommand extends AbstractState
 
         $this->getProgress($output, $devConfigs, $prodConfigs);
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
 
     }
 
