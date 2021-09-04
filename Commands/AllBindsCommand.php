@@ -54,7 +54,7 @@ class AllBindsCommand extends Command
 
         $this->io->text($bindsOutput);
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
 
     }
 
