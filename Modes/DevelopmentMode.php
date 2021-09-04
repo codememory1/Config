@@ -40,18 +40,6 @@ class DevelopmentMode extends AbstractMode
     /**
      * @inheritDoc
      */
-    public function getModeSubdirectories(): array
-    {
-
-        return [
-            'basic', 'packages'
-        ];
-
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getConfigsWithData(): array
     {
 
@@ -72,7 +60,7 @@ class DevelopmentMode extends AbstractMode
                 $arguments = $this->explode(',', $match['args'][$index]);
                 $resultFunc = null;
 
-                if(function_exists($functionName)) {
+                if (function_exists($functionName)) {
                     $resultFunc = call_user_func_array($functionName, $arguments);
                 }
 

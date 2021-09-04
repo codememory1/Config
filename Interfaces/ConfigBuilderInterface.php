@@ -15,6 +15,10 @@ interface ConfigBuilderInterface
 {
 
     /**
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Returns an array of the entire configuration
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     *
      * @param MarkupTypeInterface $markupType
      *
      * @return array
@@ -22,6 +26,10 @@ interface ConfigBuilderInterface
     public function getMergedConfigs(MarkupTypeInterface $markupType): array;
 
     /**
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Returns all binds from an array of the entire configuration
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     *
      * @param array $mergedConfigs
      *
      * @return array

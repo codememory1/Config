@@ -92,10 +92,10 @@ class Configuration implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function getModeHandler(): ModeInterface
+    public function getModeHandler(?string $modeName = null): ModeInterface
     {
 
-        return $this->modeHandlers[$this->getModeName()];
+        return $this->modeHandlers[$modeName ?: $this->getModeName()];
 
     }
 

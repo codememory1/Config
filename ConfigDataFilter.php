@@ -35,6 +35,10 @@ class ConfigDataFilter
     }
 
     /**
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Add a new filter handler that will be called when trying to get filtered data from
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     *
      * @param callable $callback
      *
      * @return ConfigDataFilter
@@ -49,26 +53,34 @@ class ConfigDataFilter
     }
 
     /**
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * We process all added filter handlers and return filtered data
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     *
      * @return array
      */
     public function getFormattedConfigs(): array
     {
 
-        $this->recursiveReplacement($this->mergedConfigs);
+        $this->recursiveExecutionHandlers($this->mergedConfigs);
 
         return $this->mergedConfigs;
 
     }
 
     /**
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Recursive execution of handlers if the value from the configuration is not an array
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     *
      * @param array $data
      */
-    private function recursiveReplacement(array &$data): void
+    private function recursiveExecutionHandlers(array &$data): void
     {
 
         foreach ($this->iteration($data) as &$value) {
             if (is_array($value)) {
-                $this->recursiveReplacement($value);
+                $this->recursiveExecutionHandlers($value);
             } else {
                 foreach ($this->filters as $filter) {
                     call_user_func_array($filter, [&$value]);
@@ -79,6 +91,10 @@ class ConfigDataFilter
     }
 
     /**
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Returns an iteration generator by reference
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     *
      * @param array $data
      *
      * @return Generator
